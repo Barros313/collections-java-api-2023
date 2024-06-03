@@ -28,6 +28,10 @@ public class CarrinhoDeCompras {
     }
 
     public double calcularValorTotal() {
+        if (itemList.isEmpty()) {
+            throw new RuntimeException("O carrinho está vazio!");
+        }
+
         double total = 0;
 
         for (Item item : itemList) {
@@ -38,6 +42,11 @@ public class CarrinhoDeCompras {
     }
 
     public void exibirItens() {
+        if (itemList.isEmpty()) {
+            System.out.println("O carrinho está vazio!");
+            return;
+        }
+
         for (Item item : itemList) {
             System.out.println("Item: " + item.getNome());
             System.out.println("Preço: R$" + item.getPreco());
@@ -53,6 +62,19 @@ public class CarrinhoDeCompras {
         carrinho.adicionarItem("Torcidas 70g Pimenta Mexicana", 2.49, 5);
 
         carrinho.exibirItens();
-        System.out.printf("Valor total: R$%.2f", carrinho.calcularValorTotal());
+        System.out.printf("Valor total: R$%.2f\n\n", carrinho.calcularValorTotal());
+
+        carrinho.removerItem("Red Bull 200ml Tradicional");
+        carrinho.removerItem("Torcidas 70g Pimenta Mexicana");
+
+        carrinho.exibirItens();
+        try {
+            System.out.printf("Valor total: R$%.2f", carrinho.calcularValorTotal());
+        } catch (RuntimeException e) {
+            System.out.println("O carrinho está vazio!");
+            return;
+        }
+
+
     }
 }
